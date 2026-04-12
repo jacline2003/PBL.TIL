@@ -20,9 +20,8 @@
 3. 결과 이미지
 결과
 <img width="960" height="540" alt="0412Step1Main" src="https://github.com/user-attachments/assets/aa0a1ee3-7698-410f-a287-7a7b5c1dff68" />
-<img width="960" height="540" alt="0412Step3Main" src="https://github.com/user-attachments/assets/09b5a876-7aef-42ed-96f2-d60c254f819a" />
-<img width="960" height="540" alt="0412Step2Main" src="https://github.com/user-attachments/assets/1c90e520-1fbf-4846-a8c9-0c2fa52b76ec" />
 <img width="960" height="540" alt="0412Step2Main" src="https://github.com/user-attachments/assets/4ebddc32-8911-4d6a-b014-40d31f03a213" />
+<img width="960" height="540" alt="0412Step3Main" src="https://github.com/user-attachments/assets/09b5a876-7aef-42ed-96f2-d60c254f819a" />
 
 오류
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/17255970-5740-4ed9-b0e0-322e5c5a411e" />
