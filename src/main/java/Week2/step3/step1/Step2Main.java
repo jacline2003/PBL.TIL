@@ -1,4 +1,4 @@
-package step1;
+package Week2.step3.step1;
 
 import java.util.Scanner;
 
