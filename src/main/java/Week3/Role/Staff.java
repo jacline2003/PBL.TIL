@@ -1,7 +1,7 @@
 package Week3.Role;
 
-import Week3.Policy.StaffPolicy;
 import Week3.Policy.Policy;
+import Week3.Policy.StaffPolicy;
 
 public class Staff extends Roles {
     private String position;
@@ -18,7 +18,7 @@ public class Staff extends Roles {
 
     @Override
     public String getInfo() {
-        return "👨‍💼 운영진\n" +
+        return "🛠️ 운영진\n" +
                 "이름: " + getName() + "\n" +
                 "전공: " + getMajor() + "\n" +
                 "기수: " + getGen() + "\n" +

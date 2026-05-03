@@ -15,19 +15,26 @@ public abstract class Roles {
         this.part = part;
     }
 
-    // getter
-    public String getName() { return name; }
-    public String getMajor() { return major; }
-    public int getGen() { return gen; }
-    public String getPart() { return part; }
-
-    // 🔥 정책 반환
-    protected abstract Policy getPolicy();
-
-    // 🔥 위임
-    public boolean canSubmit() {
-        return getPolicy().canSubmit();
+    // Getter
+    public String getName() {
+        return name;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public int getGen() {
+        return gen;
+    }
+
+    public String getPart() {
+        return part;
+    }
+
+    // 정책
+    protected abstract Policy getPolicy();
+
+    // 출력용
     public abstract String getInfo();
 }
