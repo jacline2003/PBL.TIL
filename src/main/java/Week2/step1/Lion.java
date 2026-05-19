@@ -1,4 +1,4 @@
-package Week2.step3.step1;
+package Week2.step1;
 
 public class Lion {
 

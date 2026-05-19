@@ -1,5 +1,4 @@
-package Week3;
-
+package Week3.Role;
 // 사진 속 구조에 맞춰서 Role.java 안에 있는 Roles 클래스를 가져옵니다.
 import Week3.Role.Roles;
 import Week3.Role.Lion;

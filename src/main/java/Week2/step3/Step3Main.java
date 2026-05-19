@@ -1,6 +1,6 @@
 package Week2.step3;
 
-import Week2.step3.step1.Lion;
+import Week2.step1.Lion;
 
 public class Step3Main {
 
