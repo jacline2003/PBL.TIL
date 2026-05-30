@@ -1,13 +1,13 @@
 package com.example.Week7.dto;
 
-public class StaffUpdateRequest {
+public class StaffCreateRequest {
     private String name;
     private String major;
     private Integer generation;
     private String part;
     private String position;
 
-    public StaffUpdateRequest() {}
+    public StaffCreateRequest() {}
 
     public String getName() { return name; }
     public String getMajor() { return major; }
