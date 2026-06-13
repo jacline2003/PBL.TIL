@@ -1,73 +1,191 @@
 package com.example.Week7.service;
 
-import com.example.Week7.domain.Lion;
 import com.example.Week7.domain.Member;
-import com.example.Week7.domain.Staff;
+
 import com.example.Week7.dto.*;
-        import com.example.Week7.repository.MemberRepository;
+
+import com.example.Week7.repository.MemberRepository;
+
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import java.util.stream.Collectors;
+
 @Service
+
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    // 생성자 주입
+
     public MemberService(MemberRepository memberRepository) {
+
         this.memberRepository = memberRepository;
+
     }
 
-    public MemberResponse registerLion(LionRequest request) {
-        if (memberRepository.existsByName(request.getName())) {
-            throw new IllegalStateException("이미 존재하는 이름입니다.");
-        }
-        Lion lion = new Lion(request.getName(), request.getMajor(),
-                request.getGeneration(), request.getPart(), request.getStudentId());
-        memberRepository.save(lion);
-        return new MemberResponse(lion);
+    // Lion 등록
+
+    @Transactional
+
+    public MemberResponse createLion(LionCreateRequest request) {
+
+        Member member = Member.createLion(
+
+                request.getName(),
+
+                request.getMajor(),
+
+                request.getGeneration(),
+
+                request.getPart(),
+
+                request.getStudentId()
+
+        );
+
+        // save() 호출 시 영속성 컨텍스트에 저장 + DB INSERT 실행
+
+        // → INSERT 후 DB가 생성한 id가 member 객체에 자동으로 채워짐 (IDENTITY 전략)
+
+        Member saved = memberRepository.save(member);
+
+        return MemberResponse.from(saved);
+
     }
 
-    public MemberResponse registerStaff(StaffRequest request) {
-        if (memberRepository.existsByName(request.getName())) {
-            throw new IllegalStateException("이미 존재하는 이름입니다.");
-        }
-        Staff staff = new Staff(request.getName(), request.getMajor(),
-                request.getGeneration(), request.getPart(), request.getPosition());
-        memberRepository.save(staff);
-        return new MemberResponse(staff);
+    // Staff 등록
+
+    @Transactional
+
+    public MemberResponse createStaff(StaffCreateRequest request) {
+
+        Member member = Member.createStaff(
+
+                request.getName(),
+
+                request.getMajor(),
+
+                request.getGeneration(),
+
+                request.getPart(),
+
+                request.getPosition()
+
+        );
+
+        Member saved = memberRepository.save(member);
+
+        return MemberResponse.from(saved);
+
     }
 
-    public MemberResponse getMember(String name) {
-        Member member = memberRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 멤버입니다."));
-        return new MemberResponse(member);
+    // 전체 조회
+
+    @Transactional(readOnly = true)
+
+    public List<MemberResponse> findAll() {
+
+        return memberRepository.findAll()
+
+                .stream()
+
+                .map(MemberResponse::from)
+
+                .collect(Collectors.toList());
+
     }
 
-    public MemberResponse updateLion(String name, LionUpdateRequest request) {
-        Member member = memberRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 멤버입니다."));
-        if (!(member instanceof Lion lion)) {
-            throw new IllegalArgumentException("아기사자 멤버가 아닙니다.");
-        }
-        lion.update(request.getMajor(), request.getGeneration(),
-                request.getPart(), request.getStudentId());
-        return new MemberResponse(lion);
+    // ID로 단일 조회
+
+    @Transactional(readOnly = true)
+
+    public MemberResponse findById(Long id) {
+
+        // findById() → Optional 반환 → 없으면 null 반환 (week7 패턴 유지)
+
+        return memberRepository.findById(id)
+
+                .map(MemberResponse::from)
+
+                .orElse(null);
+
     }
 
-    public MemberResponse updateStaff(String name, StaffUpdateRequest request) {
-        Member member = memberRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 멤버입니다."));
-        if (!(member instanceof Staff staff)) {
-            throw new IllegalArgumentException("운영진 멤버가 아닙니다.");
-        }
-        staff.update(request.getMajor(), request.getGeneration(),
-                request.getPart(), request.getPosition());
-        return new MemberResponse(staff);
+    // Lion 수정
+
+    @Transactional
+
+    public MemberResponse updateLion(Long id, LionUpdateRequest request) {
+
+        Member member = memberRepository.findById(id).orElse(null);
+
+        if (member == null) return null;
+
+        member.updateLion(
+
+                request.getName(),
+
+                request.getMajor(),
+
+                request.getGeneration(),
+
+                request.getPart(),
+
+                request.getStudentId()
+
+        );
+
+        // @Transactional 덕분에 별도 save() 없이도 변경 감지(dirty checking)로 UPDATE 실행
+
+        return MemberResponse.from(member);
+
     }
 
-    public void deleteMember(String name) {
-        if (!memberRepository.existsByName(name)) {
-            throw new IllegalArgumentException("존재하지 않는 멤버입니다.");
-        }
-        memberRepository.deleteByName(name);
+    // Staff 수정
+
+    @Transactional
+
+    public MemberResponse updateStaff(Long id, StaffUpdateRequest request) {
+
+        Member member = memberRepository.findById(id).orElse(null);
+
+        if (member == null) return null;
+
+        member.updateStaff(
+
+                request.getName(),
+
+                request.getMajor(),
+
+                request.getGeneration(),
+
+                request.getPart(),
+
+                request.getPosition()
+
+        );
+
+        return MemberResponse.from(member);
+
     }
+
+    // 삭제
+
+    @Transactional
+
+    public boolean deleteMember(Long id) {
+
+        if (!memberRepository.existsById(id)) return false;
+
+        memberRepository.deleteById(id);
+
+        return true;
+
+    }
+
 }
