@@ -1,0 +1,20 @@
+# 📘 Today I Learned
+
+### 1. 오늘 배운 내용
+- JPA 연관관계 매핑 (@ManyToOne, @OneToMany)을 활용해 Member와 Assignment 엔티티를 연결했다.
+- Assignment CRUD API를 구현했다 (과제 등록, 조회, 수정, 삭제)
+- @Transactional과 @Transactional(readOnly = true)의 차이를 알게되었다.
+
+### 2. 핵심 정리 (내 언어로)
+-@ManyToOne vs @OneToMany 비교 : Assignment(N)가 Member(1)를 참조하는 구조. @ManyToOne이 붙은 쪽(Assignment)이 연관관계의 주인이고, 실제 DB에 FK(member_id)가 생긴다.
+- @Transactional: 서비스 계층에 붙여서 DB 작업 중 예외 발생 시 자동 롤백을 보장한다.
+- @Transactional: 조회 전용 메서드에 사용. Hibernate의 변경 감지를 비활성화해 성능을 높인다.
+
+
+### 3. 결과 이미지(스크린샷)
+- 이미지 첨부가 안되어서 그냥 올리고 따로 이미지 파일 만들어서 올릴게요 ㅠㅠㅠ
+
+
+### 4. 느낀 점
+- 연관관계 설정할 때 import 하나 잘못 들어와서 Hibernate 내부 클래스와 충돌하는 오류를 겪었다.코드 수정이 있을 때에는 import를 꼭 확인해야겠다.
+- @OneToMany에 mappedBy를 안 쓰면 불필요한 중간 테이블이 생길 수 있다는 걸 알게 됐다.
