@@ -1,6 +1,11 @@
 package com.example.Week7.domain;
 
 import jakarta.persistence.*;
+import com.example.Week7.assignment.Assignment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "member")
@@ -19,6 +24,9 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Assignment> assignments = new ArrayList<>();
 
     protected Member() {}
 
