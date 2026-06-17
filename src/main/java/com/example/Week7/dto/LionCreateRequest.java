@@ -1,17 +1,18 @@
 package com.example.Week7.dto;
 
-public class StaffUpdateRequest {
+public class LionCreateRequest {
     private String name;
     private String major;
     private Integer generation;
     private String part;
-    private String position;
+    private String studentId;
 
-    public StaffUpdateRequest() {}
+    // 기본 생성자 (Jackson 역직렬화용)
+    public LionCreateRequest() {}
 
     public String getName() { return name; }
     public String getMajor() { return major; }
     public Integer getGeneration() { return generation; }
     public String getPart() { return part; }
-    public String getPosition() { return position; }
+    public String getStudentId() { return studentId; }
 }

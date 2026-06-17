@@ -1,4 +1,4 @@
-package com.example.pbl;
+package com.example.Pbl;
 
 import com.example.pbl.service.MemberService;
 import org.springframework.boot.SpringApplication;

@@ -1,36 +1,39 @@
 package com.example.Week7.dto;
 
-import com.example.Week7.domain.Lion;
 import com.example.Week7.domain.Member;
-import com.example.Week7.domain.Staff;
+import com.example.Week7.domain.RoleType;
 
 public class MemberResponse {
+    private Long id;
     private String name;
     private String major;
-    private int generation;
+    private Integer generation;
     private String part;
-    private String roleName;
+    private String roleName;   // "아기사자" or "운영진" (한국어로 변환해서 반환)
     private String studentId;
     private String position;
 
-    public MemberResponse(Member member) {
-        this.name = member.getName();
-        this.major = member.getMajor();
-        this.generation = member.getGeneration();
-        this.part = member.getPart();
-        this.roleName = member.getRoleName();
+    // Member 엔티티 → Response DTO 변환
+    public static MemberResponse from(Member member) {
+        MemberResponse response = new MemberResponse();
+        response.id = member.getId();
+        response.name = member.getName();
+        response.major = member.getMajor();
+        response.generation = member.getGeneration();
+        response.part = member.getPart();
+        response.studentId = member.getStudentId();
+        response.position = member.getPosition();
 
-        if (member instanceof Lion lion) {
-            this.studentId = lion.getStudentId();
-        }
-        if (member instanceof Staff staff) {
-            this.position = staff.getPosition();
-        }
+        // RoleType enum → 한국어 이름 변환
+        response.roleName = member.getRoleType() == RoleType.LION ? "아기사자" : "운영진";
+
+        return response;
     }
 
+    public Long getId() { return id; }
     public String getName() { return name; }
     public String getMajor() { return major; }
-    public int getGeneration() { return generation; }
+    public Integer getGeneration() { return generation; }
     public String getPart() { return part; }
     public String getRoleName() { return roleName; }
     public String getStudentId() { return studentId; }
