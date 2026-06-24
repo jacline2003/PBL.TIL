@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/members")
 public class MemberController {
@@ -17,35 +19,41 @@ public class MemberController {
     }
 
     @PostMapping("/lions")
-    public ResponseEntity<MemberResponse> registerLion(@RequestBody LionRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerLion(request));
+    public ResponseEntity<MemberResponse> createLion(@RequestBody LionCreateRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.createLion(request));
     }
 
     @PostMapping("/staffs")
-    public ResponseEntity<MemberResponse> registerStaff(@RequestBody StaffRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerStaff(request));
+    public ResponseEntity<MemberResponse> createStaff(@RequestBody StaffCreateRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.createStaff(request));
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<MemberResponse> getMember(@PathVariable String name) {
-        return ResponseEntity.ok(memberService.getMember(name));
+    @GetMapping
+    public ResponseEntity<List<MemberResponse>> getAllMembers(
+            @RequestParam(required = false) String part) {
+        return ResponseEntity.ok(memberService.findAll(part));
     }
 
-    @PutMapping("/lions/{name}")
-    public ResponseEntity<MemberResponse> updateLion(@PathVariable String name,
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponse> getMember(@PathVariable Long id) {
+        return ResponseEntity.ok(memberService.findById(id));
+    }
+
+    @PutMapping("/lions/{id}")
+    public ResponseEntity<MemberResponse> updateLion(@PathVariable Long id,
                                                      @RequestBody LionUpdateRequest request) {
-        return ResponseEntity.ok(memberService.updateLion(name, request));
+        return ResponseEntity.ok(memberService.updateLion(id, request));
     }
 
-    @PutMapping("/staffs/{name}")
-    public ResponseEntity<MemberResponse> updateStaff(@PathVariable String name,
+    @PutMapping("/staffs/{id}")
+    public ResponseEntity<MemberResponse> updateStaff(@PathVariable Long id,
                                                       @RequestBody StaffUpdateRequest request) {
-        return ResponseEntity.ok(memberService.updateStaff(name, request));
+        return ResponseEntity.ok(memberService.updateStaff(id, request));
     }
 
-    @DeleteMapping("/{name}")
-    public ResponseEntity<Void> deleteMember(@PathVariable String name) {
-        memberService.deleteMember(name);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+        memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -2,10 +2,12 @@ package com.example.Week7.dto;
 
 public class LionUpdateRequest {
     private String major;
+    private String name;
     private int generation;
     private String part;
     private String studentId;
 
+    public String getName() { return name; }
     public String getMajor() { return major; }
     public int getGeneration() { return generation; }
     public String getPart() { return part; }
