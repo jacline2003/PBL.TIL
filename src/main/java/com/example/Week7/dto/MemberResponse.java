@@ -1,36 +1,35 @@
 package com.example.Week7.dto;
 
-import com.example.Week7.domain.Lion;
 import com.example.Week7.domain.Member;
-import com.example.Week7.domain.Staff;
+import com.example.Week7.domain.RoleType;
 
 public class MemberResponse {
+    private Long id;
     private String name;
     private String major;
-    private int generation;
+    private Integer generation;
     private String part;
     private String roleName;
     private String studentId;
     private String position;
 
-    public MemberResponse(Member member) {
-        this.name = member.getName();
-        this.major = member.getMajor();
-        this.generation = member.getGeneration();
-        this.part = member.getPart();
-        this.roleName = member.getRoleName();
-
-        if (member instanceof Lion lion) {
-            this.studentId = lion.getStudentId();
-        }
-        if (member instanceof Staff staff) {
-            this.position = staff.getPosition();
-        }
+    public static MemberResponse from(Member member) {
+        MemberResponse response = new MemberResponse();
+        response.id = member.getId();
+        response.name = member.getName();
+        response.major = member.getMajor();
+        response.generation = member.getGeneration();
+        response.part = member.getPart();
+        response.studentId = member.getStudentId();
+        response.position = member.getPosition();
+        response.roleName = member.getRoleType() == RoleType.LION ? "아기사자" : "운영진";
+        return response;
     }
 
+    public Long getId() { return id; }
     public String getName() { return name; }
     public String getMajor() { return major; }
-    public int getGeneration() { return generation; }
+    public Integer getGeneration() { return generation; }
     public String getPart() { return part; }
     public String getRoleName() { return roleName; }
     public String getStudentId() { return studentId; }
